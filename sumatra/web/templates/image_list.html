@@ -149,10 +149,10 @@ $(document).ready(function() {
                     rendered.push('<div style="display:none">')
                     rendered.push('<dt>Parameters</dt>')
                     rendered.push('<dd>')
-                    if (row.parameters.length < 200) {
+                    if (row.parameters.length < 300) {
                         rendered.push(row.parameters)
                     } else {
-                        rendered.push('<span title="'+row.parameters+'">'+row.parameters.slice(0,200)+'...</span>')
+                        rendered.push('<span title="'+row.parameters+'">'+row.parameters.slice(0,30)+'...</span>')
                     }
                     rendered.push('</dd>')
                     rendered.push('</div>')
