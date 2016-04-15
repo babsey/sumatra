@@ -149,12 +149,7 @@ $(document).ready(function() {
                     // rendered.push('<div style="display:none">')
                     rendered.push('<dt>Parameters</dt>')
                     rendered.push('<dd>')
-                    console.log(row.parameters)
-                    if (row.parameters.length < 10) {
-                        rendered.push(row.parameters.join('<br>'))
-                    } else {
-                        rendered.push('<span title='+row.parameters.join("\n").replace('"','')+'">'+row.parameters.slice(0,10).join("<br>")+'...</span>')
-                    }
+                    rendered.push(row.parameters.slice(0,4).join('<br>'))
                     rendered.push('</dd>')
                     // rendered.push('</div>')
                 }
