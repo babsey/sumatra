@@ -153,7 +153,7 @@ $(document).ready(function() {
                     if (row.parameters.length < 10) {
                         rendered.push(row.parameters.join('<br>'))
                     } else {
-                        rendered.push("span title='"+row.parameters.join("\n")+"'>"+row.parameters.slice(0,10).join("<br>")+"...</span>")
+                        rendered.push("span title='"+row.parameters.join('\n')+"'>"+row.parameters.slice(0,10).join('<br>')+"...</span>")
                     }
                     rendered.push('</dd>')
                     // rendered.push('</div>')
