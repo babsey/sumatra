@@ -402,7 +402,9 @@ def datatable_data(request, project):
 
 
 def datatable_image(request, project):
-    columns = ['path','creation', 'output_from_record__label', 'output_from_record__reason', 'output_from_record__outcome', 'output_from_record__tags']
+    columns = ['path','creation',
+        'output_from_record__label', 'output_from_record__reason',
+        'output_from_record__outcome', 'output_from_record__tags']
     selected_tag = request.GET['tag']
     search_value = request.GET['search[value]']
     order = int(request.GET['order[0][column]'])

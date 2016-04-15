@@ -146,16 +146,16 @@ $(document).ready(function() {
                     rendered.push('</dd>')
                 }
                 if (row.parameters.length > 0) {
-                    rendered.push('<div style="display:none">')
+                    // rendered.push('<div style="display:none">')
                     rendered.push('<dt>Parameters</dt>')
                     rendered.push('<dd>')
-                    if (row.parameters.length < 300) {
+                    if (row.parameters.length < 30) {
                         rendered.push(row.parameters)
                     } else {
                         rendered.push('<span title="'+row.parameters+'">'+row.parameters.slice(0,30)+'...</span>')
                     }
                     rendered.push('</dd>')
-                    rendered.push('</div>')
+                    // rendered.push('</div>')
                 }
                 rendered.push('</dl>')
                 return rendered.join(' ');
@@ -171,7 +171,7 @@ $(document).ready(function() {
             } else {
                 return '<span title="'+data+'">'+data.slice(0,200)+'...</span>'
             }
-        }, "targets": [3,4,6], "visible": false},                                                   // reason,outcome
+        }, "targets": [3,4,6], "visible": false},                                                   // reason,outcome, parameters
         {"render": function(data, type, row) {
             if (data.length == 0) {
                 return ''
