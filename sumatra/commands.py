@@ -41,7 +41,7 @@ logger.debug("STARTING")
 
 modes = ("init", "configure", "info", "run", "list", "delete", "comment", "tag",
          "repeat", "diff", "help", "export", "upgrade", "sync", "migrate", "version",
-         "script", "compare")
+         "script", "compare", "rsync")
 
 store_arg_help = "The argument can take the following forms: (1) `/path/to/sqlitedb` - DjangoRecordStore is used with the specified Sqlite database, (2) `http[s]://location` - remote HTTPRecordStore is used with a remote Sumatra server, (3) `postgres://username:password@hostname/databasename` - DjangoRecordStore is used with specified Postgres database."
 
