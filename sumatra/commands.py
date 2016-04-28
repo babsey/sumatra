@@ -847,4 +847,5 @@ def rsync(argv):
     parser = ArgumentParser(usage=usage,
                             description=description)
     parser.add_argument('path', help="a filesystem path or ssh")
-    os.system("rsync -avz . %s" %argv.path)
+    args = parser.parse_args(argv)
+    os.system("rsync -avz . %s" %args.path)
