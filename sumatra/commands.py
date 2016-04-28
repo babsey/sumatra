@@ -11,7 +11,7 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from builtins import str
 
-import os.path
+import os
 import sys
 from argparse import ArgumentParser
 from textwrap import dedent
@@ -836,3 +836,15 @@ def compare(argv):
     print('\033[91m')
     print(tabulate(tot3,headers=['key','value - only in record']))
     print('\033[0m')
+
+
+def rsync(argv):
+    usage = "%(prog)s rsync PATH"
+    description = dedent("""\
+        Synchronize project to the destination.
+        Note that PATH may be either filesystem paths or via ssh.
+        """)  # need to say what happens if the sync is incomplete due to label collisions
+    parser = ArgumentParser(usage=usage,
+                            description=description)
+    parser.add_argument('path', help="a filesystem path or ssh")
+    os.system("rsync -avz . %s" %argv.path)

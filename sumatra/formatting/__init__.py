@@ -321,6 +321,11 @@ class ParamsTable(object):
                +[str(parameter_set.get(header,''))[:self.max_column_width] for header in self.headers[6:]])
         return output
 
+mimetype_colors = {
+    'text': '\033[1;34m',
+    'image': '\033[1;33m'
+}
+
 class DataTable(object):
 
     def __init__(self, rows, max_column_width=20, seperator='|'):
@@ -330,7 +335,7 @@ class DataTable(object):
         self.seperator = seperator
 
     def get_headers(self):
-        return ['directory', 'filename', 'digest', 'creation', 'size', 'mimetype']
+        return ['output_from_record', 'directory', 'filename', 'digest', 'creation', 'size', 'mimetype']
 
     def calculate_column_widths(self):
         column_widths = []
@@ -338,6 +343,8 @@ class DataTable(object):
             column_val_width = []
             for row in self.rows:
                 for output_file in row.output_data:
+                    if header == 'output_from_record':
+                        column_val_width.append(len(str(row.label)))
                     if header == 'directory':
                         column_val_width.append(len(str(os.path.dirname(output_file.path))))
                     if header == 'filename':
@@ -353,18 +360,26 @@ class DataTable(object):
     def __str__(self):
         column_widths = self.calculate_column_widths()
         if self.seperator == '|':
-            format = "| " + " | ".join("%%-%ds" % w for w in column_widths) + " |\n"
+            format = "| " + " | ".join("%%-%ds" % w for w in column_widths) + " |"
         else:
-            format = self.seperator.join(len(column_widths)*["%s"]) + "\n"
+            format = self.seperator.join(len(column_widths)*["%s"])
         assert len(column_widths) == len(self.headers)
-        output = format % tuple(h[:self.max_column_width] for h in self.headers)
+        output = format % tuple(h[:self.max_column_width] for h in self.headers) + '\n'
         for row in self.rows:
             for output_file in row.output_data:
+                filetype = output_file.metadata['mimetype']
+                if filetype is not None:
+                    output += mimetype_colors.get(filetype.split('/')[0], '\033[1;30m')
                 output += format % tuple(
-                    [str(os.path.dirname(output_file.path)[:self.max_column_width])]
+                    [str(row.label[:self.max_column_width])]
+                    +[str(os.path.dirname(output_file.path)[:self.max_column_width])]
                     +[str(os.path.basename(output_file.path)[:self.max_column_width])]
-                    +[str(getattr(output_file, header))[:self.max_column_width] for header in self.headers[2:4]]
-                    +[str(output_file.metadata[header])[:self.max_column_width] for header in self.headers[4:]])
+                    +[str(getattr(output_file, header))[:self.max_column_width] for header in self.headers[3:5]]
+                    +[str(output_file.metadata[header])[:self.max_column_width] for header in self.headers[5:]]
+                    )
+                if filetype is not None:
+                    output += '\033[1;m'
+                output += '\n'
         return output
 
 
