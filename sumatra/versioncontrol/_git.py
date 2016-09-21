@@ -20,6 +20,7 @@ standard_library.install_aliases()
 import logging
 import git
 import os
+import sys
 import shutil
 from distutils.version import LooseVersion
 from configparser import NoSectionError, NoOptionError
@@ -104,17 +105,13 @@ class GitWorkingCopy(WorkingCopy):
 
     def content(self, filename, digest=None):
         """Get the file content from repository."""
-        if '/' in filename:
-            path_to_file = filename.split('/')
-            pardir_list, filename = path_to_file[:-1], path_to_file[-1]
-
         repo = git.Repo(self.path)
         try:
-            item = repo.commit(digest)
-            for tree in item.tree.trees:
-                for blob in tree.blobs:
-                    if blob.name == filename:
-                        return blob.data_stream.read()
+            for _,blob in repo.index.iter_blobs():
+                if blob.name == os.path.basename(filename):
+                    expected_encoding = sys.getfilesystemencoding()
+                    file_content = repo.git.show('%s:%s' %(digest, blob.path)).decode(expected_encoding)
+                    return file_content
         except:
             return 'File content not found.'
 
