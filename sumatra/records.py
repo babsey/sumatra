@@ -228,7 +228,7 @@ class Record(object):
     @property
     def script_content(self):
         wc = get_working_copy()
-        return wc.content(self.main_file, self.version)
+        return wc.content(self.version, self.main_file)
 
     @property
     def filename(self):
